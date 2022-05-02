@@ -1,8 +1,9 @@
-# automation-platforms
+# automation-platforms npm version is 8.5.0
 
 ## Project setup
 ```
 npm install
+
 ```
 
 ### Compiles and hot-reloads for development
