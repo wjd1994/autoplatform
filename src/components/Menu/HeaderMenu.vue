@@ -1,15 +1,15 @@
 <template>
-<div class="headermenu">
-   <transition name="el-zoom-in-center">
-      <img ref="menuimg" id="menuimg" v-if="menuimgshow" src="../../assets/transsionlogo.jpeg" />
-   </transition>
- <el-button type="text" @click="menushow" v-bind:icon="foldicon" id="menushowbutton" style="font-size: 20px;color:black"></el-button>
-<el-menu ref="menu" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" :unique-opened=true
-  text-color="#303133" active-text-color="#67C23A"
->
-    <NavMenu :navMenus="menudata"></NavMenu>
-</el-menu>
-</div>
+  <div class="headermenu">
+    <transition name="el-zoom-in-center">
+        <img ref="menuimg" id="menuimg" v-if="menuimgshow" src="../../assets/transsionlogo.jpeg" />
+    </transition>
+    <el-button type="text" @click="menushow" v-bind:icon="foldicon" id="menushowbutton" style="font-size: 20px;color:black"></el-button>
+      <el-menu ref="menu" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" :unique-opened=true
+        text-color="#303133" active-text-color="#67C23A"
+      >
+          <NavMenu :navMenus="menudata"></NavMenu>
+      </el-menu>
+  </div>
 </template>
 <script>
 import NavMenu from './NavMenu.vue'

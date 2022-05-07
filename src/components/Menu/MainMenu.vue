@@ -1,11 +1,11 @@
 <template>
-        <div class="main-layout">
+        <div v-if="dataflag" class="main-layout">
 
             <div class="menuheader">
                 <header-menu :isCollapse.sync="isCollapse" :menudata="menuData" :activeIndex="activeIndex"/>
             </div>
             <div class="center">
-                <div class="menuleft">
+                <div class="menuleft" ref="menuleft">
                   <template v-for="(data,i) in menuData">
                     <div :key="i" v-if="i==menuindex1">
                     <aside-menu v-if="data['childs']" :isCollapse="isCollapse" :asidemenudata="data['childs']" :activeIndex="activeIndex" />
@@ -34,6 +34,8 @@ export default {
   name: 'MainMenu',
   data(){
     return {
+      //控制菜单数据请求完成后才渲染
+      dataflag: true,
       //左侧菜单隐藏变量
       isCollapse: false,
       //主菜单id切换变量
@@ -50,7 +52,6 @@ export default {
           {
               entity: {
               id: 0,
-              index:0,
               name: "/index",
               icon: "el-icon-message",
               alias: "首页"
@@ -59,7 +60,6 @@ export default {
           {
             entity: {
             id: 1,
-            index:1,
             name: "/tool",
             icon: "el-icon-message",
             alias: "工具栏"
@@ -69,7 +69,6 @@ export default {
           {
               entity: {
               id: 2,
-              index:1,
               name: "/tool/tool",
               icon: "el-icon-message",
               alias: "一级菜单"
@@ -78,7 +77,6 @@ export default {
           {
             entity: {
             id: 21,
-            index:3,
             name: "/tool2",
             icon: "el-icon-message",
             alias: "二级菜单"
@@ -88,7 +86,6 @@ export default {
             {
               entity: {
                 id: 22,
-                index:1,
                 name: "/tool/tool1",
                 icon: "el-icon-bell",
                 alias: "权限管理"
@@ -97,7 +94,6 @@ export default {
             {
               entity: {
                 id: 23,
-                index:2,
                 name: "/tool/tool2",
                 icon: "el-icon-bell",
                 alias: "角色管理"
@@ -112,11 +108,21 @@ export default {
     }
   },
   props:[],
+  beforeCreate(){
+    
+  },
   created(){
+    
+    this.getmenudata();
     var path = this.$router.history.current.fullPath
     this.$router.push('/')
     this.$router.push(path)
+    
 
+  },
+  mounted(){
+
+    this.$refs.menuleft.style.minHeight=window.innerHeight+"px";
   },
   updated(){
 
@@ -146,6 +152,18 @@ export default {
     AsideMenu,
   },
   methods:{
+    getmenudata(){
+      var _this = this
+      this.$axios.get("http://127.0.0.1:8082/getmenudata",
+        {}
+      ).then(function(res){
+        _this.menuData = res.data
+        console.log(res)
+        _this.dataflag = true
+      }).catch((err)=>{
+        console.log(err)
+      })
+    },
 
     clickTab () {
       this.$router.push({path: this.state.activeIndexTab})
@@ -190,7 +208,7 @@ export default {
 
 .menuleft{
   /* background-color: cornflowerblue; */
-  min-height: 550px;
+  /* min-height: 550px; */
   background-color: #545c64;
 
 
