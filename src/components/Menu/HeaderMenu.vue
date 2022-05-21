@@ -1,6 +1,6 @@
 <template>
   <div class="headermenu">
-    <transition name="el-zoom-in-center">
+    <transition name="el-fade-in-linear">
         <img ref="menuimg" id="menuimg" v-if="menuimgshow" src="../../assets/transsionlogo.jpeg" />
     </transition>
     <el-button type="text" @click="menushow" v-bind:icon="foldicon" id="menushowbutton" style="font-size: 20px;color:black"></el-button>

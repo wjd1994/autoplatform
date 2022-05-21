@@ -5,7 +5,7 @@
  background-color="#545c64" text-color="#303133" active-text-color="#67C23A"
 > -->
 <el-menu :default-active="activeIndex" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" @select="handleSelect"
- background-color="#545c64" text-color="white"
+ background-color="#545c64" text-color="white" :collapse-transition="false"
 >
   <NavMenu :navMenus="asidemenudata"></NavMenu>
 </el-menu>
@@ -52,9 +52,6 @@ import NavMenu from './NavMenu.vue'
   }
 </script>
 <style>
-  #leftside{
-    background-color:#545c64;
-  }
   .el-menu-vertical-demo:not(.el-menu--collapse){
     width: 200px;
     height:100%;

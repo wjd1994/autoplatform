@@ -1,25 +1,6 @@
 <template>
   <div id="app">
-    <vue-particles 
-        color="#000"
-        :particleOpacity="0.7"
-        :particlesNumber="40"
-        shapeType="polygon"
-        :particleSize="2"
-        linesColor="#000"
-        :linesWidth="1"
-        :lineLinked="true"
-        :lineOpacity="0.4"
-        :linesDistance="40"
-        :moveSpeed="2"
-        :hoverEffect="true"
-        hoverMode="grab"
-        :clickEffect="false"
-        clickMode="bubble"
-        hidden
-      >
-      
-      </vue-particles>
+
       <router-view id="mainview"></router-view>
 
     
@@ -57,14 +38,9 @@ export default {
 }
 #particles-js {
     width: 100%;
-    /* height: calc(100% - 100px); */
-    position: absolute;
+    height: calc(100% - 100px);
+    position: fixed;
     overflow: hidden;
   }
-/* #mainview{
-  position: relative;
-  top:100px;
-  width:80%;
-  height:80%;
-} */
+
 </style>

@@ -2,6 +2,7 @@ import MainMenu from '../components/Menu/MainMenu.vue'
 import IndexPage from '../components/Pages/index/index.vue'
 import ToolPage1 from '../components/Pages/tools/tool1.vue'
 import ToolPage2 from '../components/Pages/tools/tool2.vue'
+// import CaseManage from '../components/Pages/autotestmanage/casemanage.vue'
 
 const routes=[
     {
@@ -41,6 +42,28 @@ const routes=[
               component:  ToolPage2
             }
           ]
+      },
+      {
+        path:'/autotestmanage/',
+        name:'autotestmanage',
+        meta:{title:'自动化管理', index:2},
+        component: MainMenu,
+        children:[
+          {
+            path:'casemanage',
+            name:'casemanage',
+            meta:{title:'用例管理', index:2},
+            // component: CaseManage
+            component: ()=>import('../components/Pages/autotestmanage/casemanage.vue')
+          },
+          {
+            path:'caseedit',
+            name:'caseedit',
+            meta:{title:'用例编写', index:2},
+            // component: CaseManage
+            component: ()=>import('../components/Pages/autotestmanage/caseedit.vue')
+          }
+        ]
       }
 ]
 export default routes

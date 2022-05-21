@@ -5,7 +5,7 @@
                 <header-menu :isCollapse.sync="isCollapse" :menudata="menuData" :activeIndex="activeIndex"/>
             </div>
             <div class="center">
-                <div class="menuleft" ref="menuleft">
+                <div class="menuleft" ref="menuleft" :style="{maxWidth:menuleftwidth}">
                   <template v-for="(data,i) in menuData">
                     <div :key="i" v-if="i==menuindex1">
                     <aside-menu v-if="data['childs']" :isCollapse="isCollapse" :asidemenudata="data['childs']" :activeIndex="activeIndex" />
@@ -14,10 +14,11 @@
                     </div>
                   </template>
                 </div>
-                <div class="content">
+
+                <div class="content" :style="{width:contentwidth}">
                   <el-tabs v-model="state.activeIndexTab" type="card" @tab-click="clickTab" @tab-remove="removeTab" closable>
                     <el-tab-pane v-for="item in state.openTab" :key="item.title" :label="item.title" :name="item.name">
-                        <router-view/>
+                        <router-view class="contentview"/>
                     </el-tab-pane>
                   </el-tabs>
                   
@@ -40,6 +41,8 @@ export default {
       isCollapse: false,
       //主菜单id切换变量
       menuindex1: 0,
+      menuleftwidth: "200px",
+      contentwidth: "0px",
       //tab标签页
       state: {
         openTab: [],
@@ -50,59 +53,77 @@ export default {
       //菜单数据
       menuData:[
           {
-              entity: {
+
               id: 0,
               name: "/index",
               icon: "el-icon-message",
-              alias: "首页"
-            },
+              alias: "首页",
+
           },
           {
-            entity: {
+            
             id: 1,
-            name: "/tool",
+            name: "/",
             icon: "el-icon-message",
-            alias: "工具栏"
-            },
+            alias: "工具栏",
+         
           //二级
-          childs: [
+          children: [
           {
-              entity: {
+
               id: 2,
               name: "/tool/tool",
               icon: "el-icon-message",
-              alias: "一级菜单"
-            }
+              alias: "mock数据"
+
           },
           {
-            entity: {
+
             id: 21,
             name: "/tool2",
             icon: "el-icon-message",
-            alias: "二级菜单"
-          },
+            alias: "常用工具",
+
           //二级
-          childs: [
+          children: [
             {
-              entity: {
+
                 id: 22,
                 name: "/tool/tool1",
                 icon: "el-icon-bell",
-                alias: "权限管理"
-              }
+                alias: "xmind转excel"
+
             },
             {
-              entity: {
+
                 id: 23,
                 name: "/tool/tool2",
                 icon: "el-icon-bell",
-                alias: "角色管理"
-              }
+                alias: "json格式化"
+
             },
           ]
           }
         ]
+        },
+        {
+
+            id:3,
+            name: "/autotestmanage",
+            icon: "el-icon-bell",
+            alias: "自动化管理",
+
+          children: [
+            {
+
+                id:31,
+                name: "/autotestmanage/casemanage",
+                icon: "el-icon-bell",
+                alias: "用例管理"
+
           }
+          ]
+        }
         ],
        
     }
@@ -113,7 +134,7 @@ export default {
   },
   created(){
     
-    this.getmenudata();
+    // this.getmenudata();
     var path = this.$router.history.current.fullPath
     this.$router.push('/')
     this.$router.push(path)
@@ -121,11 +142,11 @@ export default {
 
   },
   mounted(){
-
-    this.$refs.menuleft.style.minHeight=window.innerHeight+"px";
+    this.contentwidth = window.innerWidth -230 +"px";
+    this.$refs.menuleft.style.minHeight=window.innerHeight-63+"px";
   },
   updated(){
-
+    this.$refs.menuleft.style.minHeight=window.innerHeight-63+"px";
   },
   
 
@@ -145,7 +166,19 @@ export default {
        this.state.openTab.push({name: to.path , title: to.meta.title})
        this.state.activeIndexTab = to.path
      }       
+    },
+    isCollapse(){
+      if(this.isCollapse){
+        this.menuleftwidth = "60px"
+        this.contentwidth = window.innerWidth - 90 + "px"
+
+      }
+      else{
+        this.menuleftwidth = "200px"
+        this.contentwidth = window.innerWidth - 230 + "px"
+      }
     }
+
   },
   components: {
     HeaderMenu,
@@ -154,10 +187,10 @@ export default {
   methods:{
     getmenudata(){
       var _this = this
-      this.$axios.get("http://127.0.0.1:8082/getmenudata",
+      this.$axios.get("http://10.206.64.161:8000/menu/",
         {}
       ).then(function(res){
-        _this.menuData = res.data
+        _this.menuData = res.data.data
         console.log(res)
         _this.dataflag = true
       }).catch((err)=>{
@@ -210,7 +243,15 @@ export default {
   /* background-color: cornflowerblue; */
   /* min-height: 550px; */
   background-color: #545c64;
-
+  /* max-width:200px; */
 
 }
+.content{
+  margin-left:0px;
+  /* width: 100%; */
+}
+.contentview{
+  margin-left:5px;
+}
+
 </style>
